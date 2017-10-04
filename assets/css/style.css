@@ -50,13 +50,12 @@ footer {
 
 .container {
 	border: 7px solid black;
-	margin: 0 auto;
+	margin: 10px auto;
 	max-width: 700px;
 	text-align: center;
 	color: white;
 	font-size: 1.5em;
 }
-
 
 .header {
 	margin: 0 auto;
