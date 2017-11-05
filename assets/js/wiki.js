@@ -1,6 +1,6 @@
-var res = [];
-var input = $('input[type=text]');
-var searchItem;
+let res = [];
+const input = $('input[type=text]');
+let searchItem;
 $(document).ready(function() {
   inputSearch();
 });
@@ -14,26 +14,28 @@ function searchwiki() {
     dataType: 'json',
     headers: { 'Api-User-Agent': 'Example/1.0' }
   })
-    .then(results => {
-      res = [];
-      var array = Object.keys(results.query.pages).map(function(key) {
-        return key;
-      });
-      for (var i = 0; i < array.length; i++) {
-        res.push({
-          title: results.query.pages[array[i]].title,
-          pageid: results.query.pages[array[i]].pageid,
-          content: results.query.pages[array[i]].extract
-        });
-      }
-      listItems(res);
-    })
-    .catch(err => {
-      $('ul').append(
-        '<li><p>Something went wrong. Please try again later.</li>'
-      );
-      $('li').css({ color: 'red', 'text-align': 'center' });
+    .then(appendResults)
+    .catch(appendError);
+}
+
+function appendResults(results) {
+  res = [];
+  var array = Object.keys(results.query.pages).map(function(key) {
+    return key;
+  });
+  for (var i = 0; i < array.length; i++) {
+    res.push({
+      title: results.query.pages[array[i]].title,
+      pageid: results.query.pages[array[i]].pageid,
+      content: results.query.pages[array[i]].extract
     });
+  }
+  listItems(res);
+}
+
+function appendError() {
+  $('ul').append('<li><p>Something went wrong. Please try again later.</li>');
+  $('li').css({ color: 'red', 'text-align': 'center' });
 }
 
 function inputSearch() {
